@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deaths Attributed to Unsafe Water Source</title>
+    <title>Deaths Attributed to Unsafe Water Source (2019)</title>
     <script src="https://cdn.jsdelivr.net/npm/vega@5.22.1"></script>
     <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.2.0"></script>
     <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.20.8"></script>
@@ -15,11 +15,9 @@
     <div id="vis"></div>
 
     <script>
-        const year = 2019;  // Change this value to visualize data for different years.
-
         const spec = {
             "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-            "title": `Deaths Attributed to Unsafe Water Source (${year})`,
+            "title": "Deaths Attributed to Unsafe Water Source (2019)",
             "width": 800,
             "height": 500,
             "projection": {
@@ -48,21 +46,16 @@
                             "feature": "ne_110m_admin_0_countries"
                         }
                     },
-                    "transform": [
-                        {
-                            "lookup": "properties.NAME",
-                            "from": {
-                                "data": {
-                                    "url": "https://raw.githubusercontent.com/JimXiongyuWang/FIT3179Week9Homework/main/data/share-deaths-unsafe-water.csv"
-                                },
-                                "key": "Entity",
-                                "fields": ["attributed", "Year"]
-                            }
-                        },
-                        {
-                            "filter": `datum.Year == ${year} && datum.attributed != null`
+                    "transform": [{
+                        "lookup": "properties.NAME",
+                        "from": {
+                            "data": {
+                                "url": "https://raw.githubusercontent.com/JimXiongyuWang/FIT3179Week9Homework/main/data/share-deaths-unsafe-water.csv"
+                            },
+                            "key": "Entity",
+                            "fields": ["attributed"]
                         }
-                    ],
+                    }],
                     "mark": {
                         "type": "geoshape"
                     },
@@ -77,8 +70,7 @@
                                 "scheme": "reds"
                             }
                         },
-                        "tooltip": [
-                            {
+                        "tooltip": [{
                                 "field": "properties.NAME",
                                 "type": "nominal",
                                 "title": "Country"
@@ -86,7 +78,7 @@
                             {
                                 "field": "attributed",
                                 "type": "quantitative",
-                                "title": "Share of total deaths attributed to unsafe water source",
+                                "title": "Share of total deaths that are from all causes attributed to unsafe water source",
                                 "format": ".2f"
                             }
                         ]
